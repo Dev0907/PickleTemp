@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, User, LogOut, Search } from 'lucide-react';
+import { Menu, X, Search, User, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import PickleballLogo from './PickleballLogo';
 
-interface NavbarProps {
-  isLanding?: boolean;
-}
-
-const Navbar = ({ isLanding = false }: NavbarProps) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const { isAuthenticated, user, logout } = useAuth();
@@ -23,49 +18,45 @@ const Navbar = ({ isLanding = false }: NavbarProps) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      // Implement global search functionality
+      // Implement search functionality
       console.log('Searching for:', searchTerm);
     }
   };
 
-  const landingNavItems = [
+  const navItems = [
+    { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
-    { label: 'Contact Us', href: '/contact' },
     { label: 'Pricing', href: '/pricing' },
+    { label: 'Contact Us', href: '/contact' },
   ];
-
-  const dashboardNavItems = [
-    { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Matches', href: '/join-match' },
-    { label: 'Tournaments', href: '/tournaments' },
-    { label: 'Settings', href: '/profile' },
-  ];
-
-  const navItems = isLanding ? landingNavItems : dashboardNavItems;
 
   return (
-    <nav className="bg-sport-blue shadow-lg sticky top-0 z-50">
+    <nav className="bg-ocean-teal shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center space-x-3">
-              <PickleballLogo size="md" />
-              <span className="text-xl font-bold text-white font-poppins">PickleBall Pro</span>
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-lemon-zest rounded-full flex items-center justify-center">
+                <span className="text-deep-navy font-bold text-xl">P</span>
+              </div>
+              <span className="text-2xl font-bold text-ivory-whisper">
+                Pickle<span className="text-lemon-zest">Pro</span>
+              </span>
             </Link>
           </div>
 
           {/* Global Search Bar (only when authenticated) */}
-          {isAuthenticated && !isLanding && (
+          {isAuthenticated && (
             <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
               <form onSubmit={handleSearch} className="w-full">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sport-gray w-5 h-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-deep-navy w-5 h-5" />
                   <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search matches, tournaments, players..."
-                    className="w-full pl-10 pr-4 py-2 bg-sport-yellow-light text-sport-gray-dark rounded-lg focus:ring-2 focus:ring-sport-yellow focus:outline-none placeholder-sport-gray-dark/60 font-poppins"
+                    className="w-full pl-10 pr-4 py-2 bg-ivory-whisper text-deep-navy rounded-lg focus:ring-2 focus:ring-lemon-zest focus:outline-none placeholder-deep-navy/60"
                   />
                 </div>
               </form>
@@ -78,48 +69,41 @@ const Navbar = ({ isLanding = false }: NavbarProps) => {
               <Link
                 key={item.label}
                 to={item.href}
-                className={`text-white hover:text-sport-yellow px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 font-poppins ${
-                  location.pathname === item.href ? 'text-sport-yellow' : ''
+                className={`text-ivory-whisper hover:text-lemon-zest px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                  location.pathname === item.href ? 'text-lemon-zest' : ''
                 }`}
               >
                 {item.label}
               </Link>
             ))}
             
-            {isLanding && !isAuthenticated && (
+            {!isAuthenticated ? (
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="text-white hover:text-sport-yellow px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 font-poppins"
+                  className="text-ivory-whisper hover:text-lemon-zest px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
                 >
-                  Log In
+                  Login
                 </Link>
                 <Link
                   to="/signup"
-                  className="bg-sport-yellow text-sport-blue px-6 py-2 rounded-lg font-medium hover:bg-sport-yellow-dark transition-all duration-200 shadow-md font-poppins"
+                  className="btn-accent text-sm"
                 >
                   Sign Up
                 </Link>
               </div>
-            )}
-
-            {isAuthenticated && (
+            ) : (
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  {user?.profilePicture ? (
-                    <img
-                      src={user.profilePicture}
-                      alt={user.name}
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
-                  ) : (
-                    <User className="w-8 h-8 text-white" />
-                  )}
-                  <span className="text-sm font-medium text-white font-poppins">{user?.name}</span>
-                </div>
+                <Link
+                  to="/profile"
+                  className="flex items-center space-x-2 text-ivory-whisper hover:text-lemon-zest"
+                >
+                  <User className="w-5 h-5" />
+                  <span className="text-sm font-medium">{user?.name}</span>
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-white hover:text-sport-yellow p-2 rounded-md transition-colors duration-200"
+                  className="text-ivory-whisper hover:text-lemon-zest p-2 rounded-md transition-colors duration-200"
                 >
                   <LogOut className="w-5 h-5" />
                 </button>
@@ -131,7 +115,7 @@ const Navbar = ({ isLanding = false }: NavbarProps) => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white hover:text-sport-yellow p-2"
+              className="text-ivory-whisper hover:text-lemon-zest p-2"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -141,19 +125,19 @@ const Navbar = ({ isLanding = false }: NavbarProps) => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-sport-blue border-t border-sport-blue-light">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-ocean-teal border-t border-ocean-teal-light">
               {/* Mobile Search */}
-              {isAuthenticated && !isLanding && (
+              {isAuthenticated && (
                 <div className="mb-4">
                   <form onSubmit={handleSearch}>
                     <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sport-gray-dark w-5 h-5" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-deep-navy w-5 h-5" />
                       <input
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="Search..."
-                        className="w-full pl-10 pr-4 py-2 bg-sport-yellow-light text-sport-gray-dark rounded-lg focus:ring-2 focus:ring-sport-yellow focus:outline-none placeholder-sport-gray-dark/60 font-poppins"
+                        className="w-full pl-10 pr-4 py-2 bg-ivory-whisper text-deep-navy rounded-lg focus:ring-2 focus:ring-lemon-zest focus:outline-none placeholder-deep-navy/60"
                       />
                     </div>
                   </form>
@@ -164,52 +148,49 @@ const Navbar = ({ isLanding = false }: NavbarProps) => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="text-white hover:text-sport-yellow block px-3 py-2 rounded-md text-base font-medium font-poppins"
+                  className="text-ivory-whisper hover:text-lemon-zest block px-3 py-2 rounded-md text-base font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
               
-              {isLanding && !isAuthenticated && (
+              {!isAuthenticated ? (
                 <>
                   <Link
                     to="/login"
-                    className="text-white hover:text-sport-yellow block px-3 py-2 rounded-md text-base font-medium font-poppins"
+                    className="text-ivory-whisper hover:text-lemon-zest block px-3 py-2 rounded-md text-base font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Log In
+                    Login
                   </Link>
                   <Link
                     to="/signup"
-                    className="bg-sport-yellow text-sport-blue block px-3 py-2 rounded-md text-base font-medium mx-3 text-center font-poppins"
+                    className="bg-lemon-zest text-deep-navy block px-3 py-2 rounded-md text-base font-medium mx-3 text-center"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
                   </Link>
                 </>
-              )}
-
-              {isAuthenticated && (
-                <div className="border-t border-sport-blue-light pt-4 mt-4">
+              ) : (
+                <div className="border-t border-ocean-teal-light pt-4 mt-4">
                   <div className="flex items-center px-3 py-2">
-                    {user?.profilePicture ? (
-                      <img
-                        src={user.profilePicture}
-                        alt={user.name}
-                        className="w-8 h-8 rounded-full object-cover mr-3"
-                      />
-                    ) : (
-                      <User className="w-8 h-8 text-white mr-3" />
-                    )}
-                    <span className="text-base font-medium text-white font-poppins">{user?.name}</span>
+                    <User className="w-6 h-6 text-ivory-whisper mr-3" />
+                    <span className="text-base font-medium text-ivory-whisper">{user?.name}</span>
                   </div>
+                  <Link
+                    to="/profile"
+                    className="text-ivory-whisper hover:text-lemon-zest block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Profile
+                  </Link>
                   <button
                     onClick={() => {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="text-white hover:text-sport-yellow block px-3 py-2 rounded-md text-base font-medium w-full text-left font-poppins"
+                    className="text-ivory-whisper hover:text-lemon-zest block px-3 py-2 rounded-md text-base font-medium w-full text-left"
                   >
                     Logout
                   </button>

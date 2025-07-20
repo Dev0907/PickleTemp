@@ -7,18 +7,39 @@ export default {
         'poppins': ['Poppins', 'sans-serif'],
       },
       colors: {
-        // Sports theme: Blue, Yellow, Green
-        'sport-blue': '#1E40AF',      // Primary blue
-        'sport-blue-light': '#3B82F6', // Light blue
-        'sport-blue-dark': '#1E3A8A',  // Dark blue
-        'sport-yellow': '#FCD34D',     // Primary yellow
-        'sport-yellow-light': '#FEF3C7', // Light yellow
-        'sport-yellow-dark': '#F59E0B', // Dark yellow
-        'sport-green': '#10B981',      // Primary green
-        'sport-green-light': '#6EE7B7', // Light green
-        'sport-green-dark': '#047857', // Dark green
-        'sport-gray': '#F3F4F6',       // Light background
-        'sport-gray-dark': '#374151',  // Dark text
+        // PicklePro Color Palette
+        'ocean-teal': '#204F56',
+        'sky-mist': '#9EB8F9',
+        'ivory-whisper': '#FEFFFD',
+        'lemon-zest': '#E6FD53',
+        'deep-navy': '#1B263F',
+        // Variations for better UX
+        'ocean-teal-light': '#2A6B74',
+        'ocean-teal-dark': '#1A3E44',
+        'sky-mist-light': '#B8CCFA',
+        'sky-mist-dark': '#7BA0F7',
+        'lemon-zest-light': '#EFFE7A',
+        'lemon-zest-dark': '#D9F03C',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.3s ease-out',
+        'bounce-gentle': 'bounceGentle 2s infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        bounceGentle: {
+          '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
+          '40%': { transform: 'translateY(-10px)' },
+          '60%': { transform: 'translateY(-5px)' },
+        },
       },
     },
   },

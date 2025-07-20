@@ -4,4 +4,59 @@
 
 body {
   font-family: 'Poppins', sans-serif;
+  background-color: #FEFFFD;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #204F56;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1A3E44;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #E6FD53;
+  outline-offset: 2px;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-ocean-teal text-ivory-whisper px-6 py-3 rounded-lg font-semibold hover:bg-ocean-teal-dark transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl;
+}
+
+.btn-secondary {
+  @apply bg-sky-mist text-deep-navy px-6 py-3 rounded-lg font-semibold hover:bg-sky-mist-dark transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl;
+}
+
+.btn-accent {
+  @apply bg-lemon-zest text-deep-navy px-6 py-3 rounded-lg font-semibold hover:bg-lemon-zest-dark transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl;
+}
+
+/* Card styles */
+.card {
+  @apply bg-ivory-whisper rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
+}
+
+.card-sky {
+  @apply bg-sky-mist rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
 }

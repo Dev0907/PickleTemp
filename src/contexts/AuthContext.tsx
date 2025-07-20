@@ -4,10 +4,13 @@ interface User {
   id: string;
   name: string;
   email: string;
-  skillLevel: string;
-  profilePicture?: string;
   age: number;
   gender: string;
+  level: string;
+  userType: 'player' | 'owner';
+  phone: string;
+  location?: string;
+  numberOfCourts?: number;
 }
 
 interface AuthContextType {
@@ -31,10 +34,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         id: '1',
         name: 'John Doe',
         email: email,
-        skillLevel: 'Intermediate',
         age: 28,
         gender: 'Male',
-        profilePicture: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150'
+        level: 'Intermediate',
+        userType: 'player',
+        phone: '+91 9876543210'
       };
       setUser(mockUser);
       setIsAuthenticated(true);
@@ -49,10 +53,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       id: Date.now().toString(),
       name: userData.name,
       email: userData.email,
-      skillLevel: userData.skillLevel,
       age: userData.age,
       gender: userData.gender,
-      profilePicture: userData.profilePicture
+      level: userData.level,
+      userType: userData.userType,
+      phone: userData.phone,
+      location: userData.location,
+      numberOfCourts: userData.numberOfCourts
     };
     setUser(newUser);
     setIsAuthenticated(true);
